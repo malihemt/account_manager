@@ -1,0 +1,22 @@
+version: "2.10"
+services:
+  app:
+    depends_on:
+      - mongo
+    container_name: account-manager
+    restart: always
+    command: yarn start:prod
+    build: .
+    ports:
+      - "${PORT}:3000"
+  mongo:
+    ports:
+      - "127.0.0.1:${DATABASE_PORT}:27017"
+    container_name: mongo-account-manager
+    image: mongo
+    volumes:
+      - /etc/mongo:/etc/mongo
+      - /var/lib/mongodb:/var/lib/mongodb
+      - mongo_data:/data/db
+volumes:
+  mongo_data:
